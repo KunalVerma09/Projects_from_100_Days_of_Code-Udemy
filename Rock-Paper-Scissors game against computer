@@ -29,36 +29,40 @@ import random as rm
 print("Welcome to 'rock-paper-scissors game!'")
 hand_signs = [rock, paper, scissors]
 user = int(input("What do you choose? Type 0 for rock, 1 for paper, 2 for scissors.\n"))
-print(f"You chose:\n{hand_signs[user]}")
-comp = rm.randint(0,2)
-print(f"Computer chose:\n{hand_signs[comp]}")
 
-#Method 1 to determine outcome
-if user == 0:
-  if comp == 0:
-    print("It's a tie!")
-  elif comp == 1:
-    print("You lose!")
-  else:
-    print("You win!")
-elif user == 1:
-  if comp == 0:
-    print("You win!")
-  elif comp == 1:
-    print("It's a tie!")
-  else:
-    print("You lose!")
+if user < 0 or user >= 3:
+  print("You entered an invalid number! You lose.")
 else:
-  if comp == 0:
-    print("You lose!")
-  elif comp == 1:
-    print("You win!")
+  print(f"You chose:\n{hand_signs[user]}")
+  comp = rm.randint(0,2)
+  print(f"Computer chose:\n{hand_signs[comp]}")
+  
+  #Method 1 to determine outcome
+  if user == 0:
+    if comp == 0:
+      print("It's a tie.")
+    elif comp == 1:
+      print("You lose.")
+    else:
+      print("You win!")
+  elif user == 1:
+    if comp == 0:
+      print("You win!")
+    elif comp == 1:
+      print("It's a tie.")
+    else:
+      print("You lose.")
   else:
-    print("It's a tie!")
-
-#Method 2 to determine outcome
-row1 = ["It's a tie!", "You win!", "You lose!"]
-row2 = ["You lose!", "It's a tie!", "You win!"]
-row3 = ["You win!", "You lose!", "It's a tie!"]
-outcome = [row1, row2, row3]
-print(outcome[comp][user])
+    if comp == 0:
+      print("You lose.")
+    elif comp == 1:
+      print("You win!")
+    else:
+      print("It's a tie.")
+  
+  #Method 2 to determine outcome
+  row1 = ["It's a tie.", "You win!", "You lose."]
+  row2 = ["You lose.", "It's a tie.", "You win!"]
+  row3 = ["You win!", "You lose.", "It's a tie."]
+  outcome = [row1, row2, row3]
+  print(outcome[comp][user])
