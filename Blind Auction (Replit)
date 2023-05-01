@@ -1,0 +1,42 @@
+from replit import clear
+logo = '''
+                         ___________
+                         \         /
+                          )_______(
+                          |"""""""|_.-._,.---------.,_.-._
+                          |       | | |               | | ''-.
+                          |       |_| |_             _| |_..-'
+                          |_______| '-' `'---------'` '-'
+                          )"""""""(
+                         /_________\\
+                       .-------------.
+                      /_______________\\
+'''
+print(logo)
+print("Welcome to the secret auction program.")
+bidders = {}
+bidding_end = False
+
+def highest_bidder(bidding_records):
+  max_bid = 0
+  winner = ""
+  for bidder in bidding_records:
+    if bidding_records[bidder] > max_bid:
+      max_bid = bidding_records[bidder]
+      winner = bidder
+  print(f"The winner is {winner} with a bid of ${max_bid}.")
+
+while not bidding_end:
+  user_name = input("What is your name?: ")
+  user_bid = int(input("What's your bid?: $"))
+  bidders[user_name] = user_bid
+  next_bidder = input("Are there any other bidders? Type 'yes' or 'no': ").lower()
+  clear()
+  
+  while next_bidder != "yes" and next_bidder != "no":
+    print("Invalid answer.")
+    next_bidder = input("Are there any other bidders? Type 'yes' or 'no': ").lower()
+  
+  if next_bidder == "no":
+    bidding_end = True
+    highest_bidder(bidding_records = bidders)
