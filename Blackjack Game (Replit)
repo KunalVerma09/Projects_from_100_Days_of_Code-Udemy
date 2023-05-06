@@ -1,0 +1,86 @@
+import random
+from replit import clear
+cards = ["Ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King"]
+logo = """
+.------.            _     _            _    _            _    
+|A_  _ |.          | |   | |          | |  (_)          | |   
+|( \/ ).-----.     | |__ | | __ _  ___| | ___  __ _  ___| | __
+| \  /|K /\  |     | '_ \| |/ _` |/ __| |/ / |/ _` |/ __| |/ /
+|  \/ | /  \ |     | |_) | | (_| | (__|   <| | (_| | (__|   < 
+`-----| \  / |     |_.__/|_|\__,_|\___|_|\_\ |\__,_|\___|_|\_\\
+      |  \/ K|                            _/ |                
+      `------'                           |__/           
+"""
+
+def draw_card(player):
+  card = random.choice(cards)
+  player["hand"].append(card) 
+  if card == "Jack" or card == "Queen" or card == "King":
+    player["score"] += 10
+  elif card == "Ace":
+    player["score"] += 11
+  else:
+    player["score"] += card
+  if "Ace" in player["hand"] and player["score"] > 21:
+    player["hand"][player["hand"].index("Ace")] = "ace"
+    player["score"] -= 10
+
+def outcome(user, computer):
+  if user["score"] > 21:
+    print("You went over. You lose 😭")
+  elif user["score"] == computer["score"]:
+    print("You draw 🤝")
+  elif user["score"] == 21 and len(user["hand"]):
+    print("You win with a Blackjack 😎")
+  elif computer["score"] == 21 and len(computer["hand"]):
+    print("You lose, opponent has a Blackjack 😱")
+  elif user["score"] > computer["score"] or computer["score"] > 21:
+    print("You win 😃")
+  else:
+    print("Opponent scored more than you. You lose 😤")
+
+def blackjack():
+  game_over = False
+  computer = {
+    "hand": [],
+    "score": 0
+  }
+  user = {
+    "hand": [],
+    "score": 0
+  }
+  print(logo)
+  for draws in range(2):
+    draw_card(computer)
+    draw_card(user)
+  while not game_over:
+    print(f"Your cards: {user['hand']}, current score: {user['score']}")
+    print(f"Computer's first card: {computer['hand'][0]}")
+    print()
+    if user["score"] > 21 or user["score"] == 0:
+      game_over = True
+    else:
+      next_draw = input("Type 'y' to get another card, or type 'n' to pass: ").lower()
+      while next_draw != "y" and next_draw != "n":
+        next_draw = input("Invalid choice,\nType 'y' to get another card, or type 'n' to pass: ").lower()
+      if next_draw == "y":
+        draw_card(user)
+      else:
+        game_over = True
+  print()
+  print(f"Your final hand: {user['hand']}, final score: {user['score']}")
+  while computer["score"] < 17:
+    draw_card(computer)
+  print(f"Computer's final hand: {computer['hand']}, final score: {computer['score']}")
+  print()
+  outcome(user, computer)
+  print()
+
+playing = "y"
+while playing == "y":
+  playing = input("Do you want to play a game of Blackjack? Type 'y' to play or 'n' to quit: ").lower()
+  while playing != 'y' and  playing != 'n':
+    playing = input("Wrong command.\nType 'y' to play or 'n' to quit: ").lower()
+  if playing == "y":
+    clear()
+    blackjack()
